@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from .routers import user
+from .routers import user, authentication
 from . import models, database
 
 # Create tables on startup
@@ -7,4 +7,5 @@ models.Base.metadata.create_all(bind=database.engine)
 
 app = FastAPI(title="Hackathon-Template-Backend")
 
+app.include_router(authentication.router)
 app.include_router(user.router)

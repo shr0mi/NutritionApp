@@ -1,5 +1,7 @@
 from pydantic import BaseModel, EmailStr
 
+
+# User
 class UserCreate(BaseModel):
     name: str
     email: EmailStr
@@ -12,3 +14,17 @@ class UserResponse(BaseModel):
 
     class Config:
         from_attributes = True  # SQLAlchemy 2.0 style
+
+
+
+# Authentication
+class Login(BaseModel):
+    username: str
+    password: str
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+class TokenData(BaseModel):
+    username: str | None = None

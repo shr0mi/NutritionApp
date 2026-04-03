@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, status, HTTPException, Response
 from sqlalchemy.orm import Session
 from .. import schemas, models, database
 from passlib.context import CryptContext
+from .authentication import get_current_user
 
 router = APIRouter(
     tags=['users']
@@ -9,6 +10,7 @@ router = APIRouter(
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+# Signup Port
 @router.post("/users/", response_model=schemas.UserResponse, status_code=status.HTTP_201_CREATED)
 def create_user(user: schemas.UserCreate, db: Session = Depends(database.get_db)):
     # Check if email already exists
@@ -32,3 +34,9 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(database.get_db)
     db.refresh(db_user)
 
     return db_user
+
+
+# Show user profile port
+@router.get("/profile", response_model=schemas.UserResponse)
+def show_profile(current_user: models.User = Depends(get_current_user)):
+    return current_user
