@@ -47,7 +47,11 @@ def login(request: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(
         data={"sub": user.email}, expires_delta=access_token_expires
     )
 
-    return schemas.Token(access_token=access_token, token_type="bearer")
+    return {
+        "access_token": access_token,
+        "token_type": "bearer", 
+        "user_id": user.id  # Pass the actual ID from the database
+    }
 
 
 def create_access_token(data: dict, expires_delta: timedelta | None = None):

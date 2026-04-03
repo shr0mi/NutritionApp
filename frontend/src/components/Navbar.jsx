@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import {Menu, Moon, Sun} from "lucide-react"
 import {
   DropdownMenu,
@@ -19,6 +20,7 @@ import {
 } from "@/components/ui/sheet";
 
 export default function Navbar(){
+    const { isLoggedIn, logout, userId } = useAuth();
     const [open, setOpen] = useState(false); // Mobile-menu
     const { setTheme } = useTheme();
     
@@ -56,13 +58,21 @@ export default function Navbar(){
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
-                
-                <Button variant="outline" asChild>
-                    <Link to="/login">Login</Link>
-                </Button>
-                <Button asChild>
-                    <Link to="/signup">Sign Up</Link>
-                </Button>
+                {isLoggedIn ?(
+                    <Button variant="outline" className="" onClick={() => { logout(); setOpen(false); }}>
+                        Logout
+                    </Button>
+                ) : (
+                <>
+                    <Button variant="outline" asChild>
+                        <Link to="/login">Login</Link>
+                    </Button>
+                    <Button asChild>
+                        <Link to="/signup">Sign Up</Link>
+                    </Button>
+                </>
+                )
+                }
                 </div>
 
                 {/* Mobile Menu Trigger */}
