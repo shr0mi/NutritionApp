@@ -1,7 +1,7 @@
 import { useAuth } from "@/contexts/AuthContext"
 
 export default function Home() {
-  const { isLoggedIn, logout, userId } = useAuth();
+  const { isLoggedIn, userId } = useAuth();
 
   return (
     <div style={{ padding: '2rem', textAlign: 'center' }}>

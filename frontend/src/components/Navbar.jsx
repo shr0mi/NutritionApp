@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import {Menu, Moon, Sun} from "lucide-react"
+import {Menu, Moon, Sun, CircleUserRound} from "lucide-react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/sheet";
 
 export default function Navbar(){
+    const navigate = useNavigate();
     const { isLoggedIn, logout, userId } = useAuth();
     const [open, setOpen] = useState(false); // Mobile-menu
     const { setTheme } = useTheme();
@@ -38,6 +39,7 @@ export default function Navbar(){
 
                 {/* Desktop Auth Buttons */}
                 <div className="hidden md:flex items-center gap-3">
+                {/* Theme Settings */}
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="outline" size="icon">
@@ -58,11 +60,28 @@ export default function Navbar(){
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
-                {isLoggedIn ?(
-                    <Button variant="outline" className="" onClick={() => { logout(); setOpen(false); }}>
+
+                {/* Profile Menu */}
+                {isLoggedIn && 
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="outline" size="icon">
+                        <CircleUserRound className="" />
+                        <span className="sr-only">Toggle User Menu</span>
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-56">
+                        <DropdownMenuItem onClick={() => {navigate("/profile")}}>
+                        Profile
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="text-red-600 focus:text-red-600" onClick={() => logout()}>
                         Logout
-                    </Button>
-                ) : (
+                        </DropdownMenuItem>
+                    </DropdownMenuContent>
+                </DropdownMenu>
+                }
+                {!isLoggedIn &&
+                (
                 <>
                     <Button variant="outline" asChild>
                         <Link to="/login">Login</Link>
@@ -84,26 +103,41 @@ export default function Navbar(){
                 </SheetTrigger>
                     <SheetContent side="right" className="w-[300px]">
                     <SheetHeader>
-                        <SheetTitle className="text-left">Menu</SheetTitle>
+                        <SheetTitle className="text-left">{isLoggedIn ? "User Menu" : "Menu"}</SheetTitle>
                     </SheetHeader>
 
                     <div className="flex flex-col gap-4 pl-5 pr-5">
-
-                        <Button
-                        variant="outline"
-                        className="w-full justify-start"
-                        asChild
-                        onClick={() => setOpen(false)}
-                        >
-                        <Link to="/login">Login</Link>
-                        </Button>
-                        <Button
-                        className="w-full justify-start"
-                        asChild
-                        onClick={() => setOpen(false)}
-                        >
-                        <Link to="/signup">Sign Up</Link>
-                        </Button>
+                        {isLoggedIn ? (
+                            <>
+                            <Button variant="outline" className="" onClick={() => { navigate("/profile"); setOpen(false); }}>
+                                Profile
+                            </Button>
+                            <Button variant="outline" className="" onClick={() => { logout(); setOpen(false); }}>
+                                Logout
+                            </Button>
+                            </>
+                        ):
+                        (
+                            <>
+                                <Button
+                                variant="outline"
+                                className="w-full justify-start"
+                                asChild
+                                onClick={() => setOpen(false)}
+                                >
+                                <Link to="/login">Login</Link>
+                                </Button>
+                                <Button
+                                className="w-full justify-start"
+                                asChild
+                                onClick={() => setOpen(false)}
+                                >
+                                <Link to="/signup">Sign Up</Link>
+                                </Button>
+                            </>
+                        )
+                        }
+                        
                     </div>
                     </SheetContent>
                 </Sheet>
