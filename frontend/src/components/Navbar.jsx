@@ -32,9 +32,9 @@ export default function Navbar(){
                 {/* {Logo} */}
                 <Link to="/" className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center text-primary-foreground font-bold text-xl">
-                    L
+                    P
                 </div>
-                <span className="font-semibold text-xl tracking-tight">MyApp</span>
+                <span className="font-semibold text-xl tracking-tight">Pusti-Tusti</span>
                 </Link>
 
                 {/* Desktop Auth Buttons */}
@@ -74,6 +74,9 @@ export default function Navbar(){
                         <DropdownMenuItem onClick={() => {navigate("/profile")}}>
                         Profile
                         </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => {navigate("/calorie-calculator")}}>
+                        Calorie Calculator
+                        </DropdownMenuItem>
                         <DropdownMenuItem className="text-red-600 focus:text-red-600" onClick={() => logout()}>
                         Logout
                         </DropdownMenuItem>
@@ -111,6 +114,9 @@ export default function Navbar(){
                             <>
                             <Button variant="outline" className="" onClick={() => { navigate("/profile"); setOpen(false); }}>
                                 Profile
+                            </Button>
+                            <Button variant="outline" className="" onClick={() => { navigate("/calorie-calculator"); setOpen(false); }}>
+                                Calorie Calculator
                             </Button>
                             <Button variant="outline" className="" onClick={() => { logout(); setOpen(false); }}>
                                 Logout

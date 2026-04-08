@@ -3,3 +3,4 @@ sqlalchemy
 passlib
 pydantic
 pyjwt
+google-genai

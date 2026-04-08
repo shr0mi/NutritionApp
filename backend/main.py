@@ -1,12 +1,12 @@
 from fastapi import FastAPI
-from .routers import user, authentication
+from .routers import user, authentication, ai_funcs
 from . import models, database
 from fastapi.middleware.cors import CORSMiddleware
 
 # Create tables on startup
 models.Base.metadata.create_all(bind=database.engine)
 
-app = FastAPI(title="Hackathon-Template-Backend")
+app = FastAPI(title="Pusti-Tusti-Backend")
 
 # Handle CORS issues
 origins = [
@@ -26,3 +26,4 @@ app.add_middleware(
 # Routers
 app.include_router(authentication.router)
 app.include_router(user.router)
+app.include_router(ai_funcs.router)

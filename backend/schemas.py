@@ -1,4 +1,4 @@
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 
 
 # User
@@ -29,3 +29,16 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     username: str | None = None
+
+
+# ai_funcs.py
+# This model ensures Gemini sent back the correct data types
+class FoodAnalysisResponse(BaseModel):
+    items: str = Field(description="A brief description of food items identified")
+    carbohydrate: int = Field(description="Calories derived from carbohydrates")
+    protien: int = Field(description="Calories derived from protein (note sp mistake required)")
+    fat: int = Field(description="Calories derived from fat")
+
+# This model ensures standard error responses
+class ErrorResponse(BaseModel):
+    error: str
