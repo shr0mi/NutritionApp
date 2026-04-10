@@ -5,6 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import ReactMarkdown from "react-markdown";
+import remarkBreaks from 'remark-breaks'
+import remarkGfm from "remark-gfm";
 
 export default function HealthChat() {
   const [messages, setMessages] = useState([]);
@@ -89,16 +92,20 @@ export default function HealthChat() {
                 <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`flex gap-3 max-w-[85%] ${m.role === 'user' ? 'flex-row-reverse' : 'flex-row'}`}>
                     <Avatar className="w-8 h-8 border shadow-sm">
-                      <AvatarFallback className={m.role === 'user' ? 'bg-primary text-white' : 'bg-white text-slate-600'}>
+                      <AvatarFallback className={m.role === 'user' ? 'bg-primary text-white dark:text-black' : 'bg-white text-slate-600 dark:bg-black dark:text-white'}>
                         {m.role === 'user' ? <User size={14} /> : <Bot size={14} />}
                       </AvatarFallback>
                     </Avatar>
                     <div className={`p-4 rounded-2xl text-sm leading-relaxed shadow-sm ${
                       m.role === 'user' 
                         ? 'bg-primary text-primary-foreground rounded-tr-none' 
-                        : 'bg-white border border-slate-200 text-slate-800 rounded-tl-none'
+                        : 'bg-white border border-slate-200 text-slate-800 rounded-tl-none dark:bg-black dark:text-white'
                     }`}>
-                      {m.parts[0]}
+                        <div className="prose prose-sm dark:prose-invert max-w-none prose-p:my-10 prose-ul:my-4 prose-li:my-2">
+                            <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
+                                {m.parts[0]}
+                            </ReactMarkdown>
+                        </div>
                     </div>
                   </div>
                 </div>
