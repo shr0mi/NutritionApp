@@ -77,6 +77,9 @@ export default function Navbar(){
                         <DropdownMenuItem onClick={() => {navigate("/calorie-calculator")}}>
                         Calorie Calculator
                         </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => {navigate("/health-chat")}}>
+                        HealthChat
+                        </DropdownMenuItem>
                         <DropdownMenuItem className="text-red-600 focus:text-red-600" onClick={() => logout()}>
                         Logout
                         </DropdownMenuItem>
@@ -117,6 +120,9 @@ export default function Navbar(){
                             </Button>
                             <Button variant="outline" className="" onClick={() => { navigate("/calorie-calculator"); setOpen(false); }}>
                                 Calorie Calculator
+                            </Button>
+                            <Button variant="outline" className="" onClick={() => { navigate("/health-chat"); setOpen(false); }}>
+                                HealthChat
                             </Button>
                             <Button variant="outline" className="" onClick={() => { logout(); setOpen(false); }}>
                                 Logout

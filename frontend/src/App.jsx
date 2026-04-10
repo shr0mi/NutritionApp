@@ -5,6 +5,7 @@ import Signup from './pages/Signup'
 import Login from './pages/Login'
 import Profile from './pages/Profile'
 import CalorieCalc from './pages/CalorieCalc'
+import HealthChat from './pages/HealthChat'
 import { Button } from './components/ui/button'
 import Navbar from './components/Navbar'
 import { ThemeProvider } from './components/theme-provider'
@@ -40,6 +41,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <CalorieCalc/>
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/health-chat" 
+            element={
+              <ProtectedRoute>
+                <HealthChat/>
               </ProtectedRoute>
             } 
           />
