@@ -80,6 +80,9 @@ export default function Navbar(){
                         <DropdownMenuItem onClick={() => {navigate("/health-chat")}}>
                         HealthChat
                         </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => {navigate("/analytics")}}>
+                        Analytics
+                        </DropdownMenuItem>
                         <DropdownMenuItem className="text-red-600 focus:text-red-600" onClick={() => logout()}>
                         Logout
                         </DropdownMenuItem>
@@ -123,6 +126,9 @@ export default function Navbar(){
                             </Button>
                             <Button variant="outline" className="" onClick={() => { navigate("/health-chat"); setOpen(false); }}>
                                 HealthChat
+                            </Button>
+                            <Button variant="outline" className="" onClick={() => { navigate("/analytics"); setOpen(false); }}>
+                                Analytics
                             </Button>
                             <Button variant="outline" className="" onClick={() => { logout(); setOpen(false); }}>
                                 Logout

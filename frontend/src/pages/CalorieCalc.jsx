@@ -9,6 +9,7 @@ export default function CalorieCalc() {
   const [rawFile, setRawFile] = useState(null); // Actual File object
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
+  const [hasLoggedData, setHasLoggedData] = useState(false);
   const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
   const { token } = useAuth();
@@ -62,6 +63,44 @@ export default function CalorieCalc() {
     }
   };
 
+  const handleLogData = async () => {
+    if (!token) {
+      setError("No authentication token found. Please log in again.");
+      return;
+    }
+
+    setLoading(true);
+    setError(null);
+
+    try{
+      const response = await fetch('http://127.0.0.1:8000/meals/', {
+        method: 'POST',
+        headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        protien: Number(result.protein),
+        carbohydrate: Number(result.carbohydrate),
+        fat: Number(result.fat),
+      }),
+      });
+
+      if(response.ok){
+        setLoading(false);
+        setHasLoggedData(true);
+      }else{
+        const data = await response.json();
+        setLoading(false);
+        setError(data.error);
+      }
+    }catch(err){
+      setLoading(false);
+      setError(err.message);
+    }
+
+  }
+
   // State: Error View
   if (error) {
     return (
@@ -110,10 +149,32 @@ export default function CalorieCalc() {
               Scan Another Meal
             </Button>
             <Button 
-            disabled={loading}
+            disabled={loading | hasLoggedData}
             className="text-2xl w-full p-6 mt-4 bg-green-600 hover:bg-green-700 text-white dark:bg-green-600 dark:hover:bg-green-500 shadow-lg"
+            onClick={handleLogData}
             >
-              Log Data
+              {(loading) ? 
+                (
+                  <>
+                  <Loader2 className="mr-2 h-6 w-6 animate-spin" />
+                    Logging Data...
+                  </>
+                ) : 
+                (
+                  (!hasLoggedData) ? 
+                  (
+                    <>
+                      Log Data
+                    </>
+                  ) :
+                  (
+                  <>
+                    ✅ Successful!
+                  </>
+                  )
+                )
+
+              }
             </Button>
           </CardContent>
         </Card>
