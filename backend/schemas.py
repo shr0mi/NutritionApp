@@ -42,3 +42,11 @@ class FoodAnalysisResponse(BaseModel):
 # This model ensures standard error responses
 class ErrorResponse(BaseModel):
     error: str
+
+
+# Anlytics.py
+
+class MealEntry(BaseModel):
+    protien: float
+    carbohydrate: float
+    fat: float
